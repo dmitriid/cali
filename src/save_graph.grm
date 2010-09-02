@@ -1,3 +1,0 @@
-$_g := neo4j:open('/Users/dmitriid/Projects/java/mine/neo/db')
-g:save('my-graph.xml') 
-g:close()
