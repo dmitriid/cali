@@ -11,7 +11,7 @@ Dependencies
 
 * Erlang (with jinterface)
 
-These are resolved through included maven project. If you don't want to build stuff yourself, there's a compiled package in the download section.
+These are resolved through included maven project. If you don't want to build stuff yourself, there's a compiled package in the [download section](http://github.com/dmitriid/cali/downloads).
 
 Starting cali
 --------
