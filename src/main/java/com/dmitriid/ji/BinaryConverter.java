@@ -1,8 +1,3 @@
-//
-// @author Dmitrii Dimandt <dmitrii@dmitriid.com>
-// @copyright 2010 Dmitrii Dimandt
-//
-//
 //------------------------------------------------------------------------------
 // Copyright (c) 2010. Dmitrii Dimandt <dmitrii@dmitriid.com>
 //
@@ -21,7 +16,6 @@
 package com.dmitriid.ji;
 
 import com.ericsson.otp.erlang.OtpErlangBinary;
-import com.ericsson.otp.erlang.OtpErlangString;
 
 public class BinaryConverter extends AbstractErlangJavaConverter<String, OtpErlangBinary> {
     public BinaryConverter() {

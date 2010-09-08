@@ -1,8 +1,3 @@
-//
-// @author Dmitrii Dimandt <dmitrii@dmitriid.com>
-// @copyright 2010 Dmitrii Dimandt
-//
-//
 //------------------------------------------------------------------------------
 // Copyright (c) 2010. Dmitrii Dimandt <dmitrii@dmitriid.com>
 //
@@ -29,11 +24,11 @@ public class NullObjectConverter extends AbstractErlangJavaConverter<NullObject,
 
     @Override
     protected OtpErlangAtom fromJava(NullObject in) {
-        return new OtpErlangAtom("undefined");  //To change body of implemented methods use File | Settings | File Templates.
+        return new OtpErlangAtom("undefined");  
     }
 
     @Override
     protected NullObject fromErlang(OtpErlangAtom in) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 }

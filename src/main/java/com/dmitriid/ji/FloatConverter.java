@@ -1,8 +1,3 @@
-//
-// @author Dmitrii Dimandt <dmitrii@dmitriid.com>
-// @copyright 2010 Dmitrii Dimandt
-//
-//
 //------------------------------------------------------------------------------
 // Copyright (c) 2010. Dmitrii Dimandt <dmitrii@dmitriid.com>
 //
@@ -29,7 +24,7 @@ public class FloatConverter extends AbstractErlangJavaConverter<Float, OtpErlang
     }
 
     protected OtpErlangFloat fromJava(Float in) {
-        if(null == in) in = new Float(0);
+        if(null == in) in = (float) 0;
         return new OtpErlangFloat(in);
     }
 
@@ -37,7 +32,7 @@ public class FloatConverter extends AbstractErlangJavaConverter<Float, OtpErlang
         try {
             return in.floatValue();
         } catch(OtpErlangRangeException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return null;
         }
     }

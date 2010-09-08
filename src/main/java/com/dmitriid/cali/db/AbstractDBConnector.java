@@ -13,24 +13,9 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 //------------------------------------------------------------------------------
-package com.dmitriid.ji;
 
-import com.ericsson.otp.erlang.OtpErlangString;
+package com.dmitriid.cali.db;
 
-public class StringConverter extends AbstractErlangJavaConverter<String,OtpErlangString> {
-
-    public StringConverter() {
-        super(String.class, OtpErlangString.class);
-    }
-
-    @Override
-    protected OtpErlangString fromJava(String in) {
-        if(null == in) in = "";
-        return new OtpErlangString(in);
-    }
-
-    @Override
-    protected String fromErlang(OtpErlangString in) {
-        return in.stringValue();
-    }
+public abstract class AbstractDBConnector {
+    public abstract void shutdown();
 }

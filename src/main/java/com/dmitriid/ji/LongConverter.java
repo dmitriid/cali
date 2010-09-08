@@ -1,8 +1,3 @@
-//
-// @author Dmitrii Dimandt <dmitrii@dmitriid.com>
-// @copyright 2010 Dmitrii Dimandt
-//
-//
 //------------------------------------------------------------------------------
 // Copyright (c) 2010. Dmitrii Dimandt <dmitrii@dmitriid.com>
 //
@@ -29,7 +24,7 @@ public class LongConverter extends AbstractErlangJavaConverter<Long, OtpErlangLo
 
     @Override
     protected OtpErlangLong fromJava(Long in) {
-        if(null == in) in = new Long(0);
+        if(null == in) in = (long) 0;
         return new OtpErlangLong(in);
     }
 

@@ -1,9 +1,3 @@
-//
-// @author Dmitrii Dimandt <dmitrii@dmitriid.com>
-// @copyright 2010 Dmitrii Dimandt
-//
-// Original code by Denis Zhdanov, see http://rsdn.ru/forum/java/3929756.1.aspx
-//
 //------------------------------------------------------------------------------
 // Copyright (c) 2010. Dmitrii Dimandt <dmitrii@dmitriid.com>
 //
@@ -19,6 +13,10 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 //------------------------------------------------------------------------------
+
+//
+// Original code by Denis Zhdanov, see http://rsdn.ru/forum/java/3929756.1.aspx
+//
 
 package com.dmitriid.ji;
 
@@ -60,7 +58,7 @@ public class ConversionManager {
 
     public void register(AbstractErlangJavaConverter... converters) {
         for(AbstractErlangJavaConverter converter : converters) {
-            Set<Class<?>> clazzes = ((Converter) converter).getSupportedClasses();
+            Set<Class<?>> clazzes = converter.getSupportedClasses();
             for(Class<?> clazz : clazzes) {
                 if(this.converters.containsKey(clazz)) {
                     this.converters.get(clazz).add(converter);

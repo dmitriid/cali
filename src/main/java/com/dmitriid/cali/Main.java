@@ -1,22 +1,29 @@
+//------------------------------------------------------------------------------
+// Copyright (c) 2010. Dmitrii Dimandt <dmitrii@dmitriid.com>
+//
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+//------------------------------------------------------------------------------
+
 package com.dmitriid.cali;
 
-/**
- * Created by IntelliJ IDEA.
- * User: dmitriid
- * Date: Jul 20, 2010
- * Time: 8:46:23 PM
- * To change this template use File | Settings | File Templates.
- */
-
-import com.dmitriid.ji.ConversionManager;
-import com.dmitriid.cali.converters.ElementObject;
+import com.dmitriid.cali.db.DBConnector;
+import com.dmitriid.cali.db.DBConnectorFactory;
 import com.ericsson.otp.erlang.*;
 import jargs.gnu.CmdLineParser;
-import org.neo4j.graphdb.*;
+import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.helpers.Pair;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class Main {
@@ -41,7 +48,7 @@ public class Main {
         CmdLineParser.Option n = parser.addStringOption('n', "name");
         CmdLineParser.Option m = parser.addStringOption('m', "mbox");
         CmdLineParser.Option c = parser.addStringOption('c', "cookie");
-        CmdLineParser.Option d = parser.addStringOption('d', "db_path");
+        CmdLineParser.Option cl = parser.addStringOption("connector");
 
         try {
             parser.parse(args);
@@ -53,11 +60,11 @@ public class Main {
         String name_value = (String) parser.getOptionValue(n);
         String mbox_value = (String) parser.getOptionValue(m);
         String cookie_value = (String) parser.getOptionValue(c);
-        String db_path = (String) parser.getOptionValue(d);
+        String className = (String) parser.getOptionValue(cl);
 
+        if(className == null) className = "com.dmitriid.cali.db.Neo4JConnector";
 
-        Neo4J db = new Neo4J(db_path);
-
+        DBConnector db = DBConnectorFactory.getConnector(className, args);
 
 
         OtpNode self = null;
@@ -78,7 +85,6 @@ public class Main {
         OtpErlangObject o;
         OtpErlangTuple msg;
         OtpErlangPid from;
-        ElementObject elementObject = new ElementObject(null);
 
         while(true) {
             try {
@@ -95,7 +101,7 @@ public class Main {
 
                     OtpErlangObject data = msg.elementAt(1);
                     if(data instanceof OtpErlangList) {
-                        OtpErlangObject out = null;
+                        OtpErlangObject out  ;
                         try{
                             Object e = db.exec(data);
                             out = db.fromJava(e);
@@ -103,7 +109,7 @@ public class Main {
                             System.out.println(e);
                             out = db.fromJava(new Pair("error", e.getMessage()));
                         }
-                        mbox.send(from, out);;
+                        mbox.send(from, out);
                     }else{
                         mbox.send(from, msg.elementAt(1));
                     }

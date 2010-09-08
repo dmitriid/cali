@@ -1,8 +1,3 @@
-//
-// @author Dmitrii Dimandt <dmitrii@dmitriid.com>
-// @copyright 2010 Dmitrii Dimandt
-//
-//
 //------------------------------------------------------------------------------
 // Copyright (c) 2010. Dmitrii Dimandt <dmitrii@dmitriid.com>
 //
@@ -40,7 +35,7 @@ public class IntegerConverter extends AbstractErlangJavaConverter<Integer, OtpEr
         try {
             return in.intValue();
         } catch(OtpErlangRangeException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
 
             return null;
         }

@@ -1,9 +1,3 @@
-//
-// @author Dmitrii Dimandt <dmitrii@dmitriid.com>
-// @copyright 2010 Dmitrii Dimandt
-//
-// Original code by Denis Zhdanov, see http://rsdn.ru/forum/java/3929756.1.aspx
-//
 //------------------------------------------------------------------------------
 // Copyright (c) 2010. Dmitrii Dimandt <dmitrii@dmitriid.com>
 //
@@ -19,6 +13,8 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 //------------------------------------------------------------------------------
+
+
 
 package com.dmitriid.ji;
 
@@ -77,7 +73,7 @@ public abstract class AbstractErlangJavaConverter<J, E> implements Converter {
                 } else if(c.getErlangClass().isAssignableFrom(argClass)) {
                     return (O) fromErlang((E) in);
                 }
-            } catch(IllegalArgumentException e){
+            } catch(IllegalArgumentException ignored){
                 
             }
         }

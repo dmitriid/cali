@@ -1,4 +1,4 @@
-*cali* is a simple interface to neo4j. It's built on top of [Gremlin](http://gremlin.tinkerpop.com/) — an amazing library for querying graph databases. See these presentations to see what I mean: [1](http://www.slideshare.net/slidarko/computing-with-directed-labeled-graphs-3879998), [2](http://www.slideshare.net/slidarko/graph-windycitydb2010), [3](http://www.slideshare.net/slidarko/problemsolving-using-graph-traversals-searching-scoring-ranking-and-recommendation). This makes it possible (at least in theory :) ) to extend and develop *cali* further, to support any database that Gremlin/[Pipes](http://pipes.tinkerpop.com/)/[Blueprints](http://blueprints.tinkerpop.com/) support.
+*cali* is a simple interface to databases supported by [Gremlin](http://gremlin.tinkerpop.com/) — an amazing library for querying graph databases. See these presentations to see what I mean: [1](http://www.slideshare.net/slidarko/computing-with-directed-labeled-graphs-3879998), [2](http://www.slideshare.net/slidarko/graph-windycitydb2010), [3](http://www.slideshare.net/slidarko/problemsolving-using-graph-traversals-searching-scoring-ranking-and-recommendation). So far *cali* supports neo4j and TinkerGraph, though it's quite easy to to extend and develop *cali* further, to support any database that Gremlin/[Pipes](http://pipes.tinkerpop.com/)/[Blueprints](http://blueprints.tinkerpop.com/) support.
 
 *cali* is a single-threaded simple and dumb library for more or less simple queries. For multithreaded goodness see [Nerlo](http://github.com/nerlo/nerlo).
 
@@ -25,9 +25,16 @@ where options are:
 * `-n`, name of the node. default is `'cali@localhost'`
 * `-m`, name of the mailbox. default is `'mbox'`
 * `-c`, cookie, if any. default is none
-* `-d`, path to neo4j database
+* `--connector`, class of database connector to use. default is `com.dmitriid.cali.db.Neo4JConnector`
 
-Of the four options above only -d is required
+Of the four options above all are optional.
+
+See `com.dmitriid.cali.db.Neo4JConnector` and `com.dmitriid.cali.db.TinkerGraphConnector` to see how to implement your own database connector
+
+**Other options**
+
+* `-d`, path to neo4j database, required. **Only valid** for Neo4JConnector
+
 
 API
 ---
@@ -148,6 +155,7 @@ More examples
 So, let's fire it up and play with it:
 
     $ java -classpath cali.jar com.dmitriid.cali.Main -d ~/Projects/java/neo4j/db
+      .... or ... java -classpath cali.jar com.dmitriid.cali.Main --connector com.dmitriid.cali.db.TinkerGraphConnector
     $ erl -sname client
     erl> F = fun(Q) -> 
                 {'mbox', 'cali@localhost'} ! {self(), Q},

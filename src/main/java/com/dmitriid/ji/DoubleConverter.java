@@ -1,8 +1,3 @@
-//
-// @author Dmitrii Dimandt <dmitrii@dmitriid.com>
-// @copyright 2010 Dmitrii Dimandt
-//
-//
 //------------------------------------------------------------------------------
 // Copyright (c) 2010. Dmitrii Dimandt <dmitrii@dmitriid.com>
 //
@@ -28,7 +23,7 @@ public class DoubleConverter extends AbstractErlangJavaConverter<Double, OtpErla
     }
 
     protected OtpErlangDouble fromJava(Double in) {
-        if(null == in) in = new Double(0);
+        if(null == in) in = (double) 0;
         return new OtpErlangDouble(in);
     }
 

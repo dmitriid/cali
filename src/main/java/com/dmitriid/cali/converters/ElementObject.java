@@ -1,6 +1,25 @@
+//------------------------------------------------------------------------------
+// Copyright (c) 2010. Dmitrii Dimandt <dmitrii@dmitriid.com>
+//
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+//------------------------------------------------------------------------------
+
+// Adapted from Rexter,
+// see http://github.com/tinkerpop/rexster/blob/master/src/main/java/com/tinkerpop/rexster/traversals/ElementJSONObject.java
+
 package com.dmitriid.cali.converters;
 
-import com.dmitriid.cali.Tokens;
+import com.dmitriid.cali.db.Tokens;
 import com.tinkerpop.blueprints.pgm.Edge;
 import com.tinkerpop.blueprints.pgm.Element;
 import com.tinkerpop.blueprints.pgm.Vertex;
@@ -9,13 +28,6 @@ import org.neo4j.helpers.Pair;
 import java.util.ArrayList;
 import java.util.Set;
 
-/**
- * Created by IntelliJ IDEA.
- * User: dmitriid
- * Date: Aug 9, 2010
- * Time: 8:21:06 PM
- * To change this template use File | Settings | File Templates.
- */
 public class ElementObject implements Element {
 
     private ArrayList _properties;
@@ -37,14 +49,13 @@ public class ElementObject implements Element {
 
     public Object get(){
         if(_o instanceof Element){
-            Object o = get_properties();
-            return o;
+            return get_properties();
         }
 
         return _o;
     }
 
-    public Object get_properties(){
+    Object get_properties(){
         ArrayList properties = new ArrayList();
         if(null == _properties) {
             if(_o instanceof Edge){
