@@ -31,10 +31,20 @@ Of the four options above all are optional.
 
 See `com.dmitriid.cali.db.Neo4JConnector` and `com.dmitriid.cali.db.TinkerGraphConnector` to see how to implement your own database connector
 
-**Other options**
+Your connector may require additional options, just append them to the options above (see example towards the end of this README).
 
-* `-d`, path to neo4j database, required. **Only valid** for Neo4JConnector
 
+**Neo4JConnector options**
+
+* `-d`, `--db_path`. path to neo4j database, required.
+
+**OrientDBConnector options**
+
+* `-u`, `--url`. url of orientdb database, required.
+* `--user`. username, required.
+* `--pass`. password, required
+
+***Note: OrientDB is currently in a non-working state (it can only open and shutdown a database). This is due to the fact that OrientDB handles stuff slightly differently from other databases. This is being worked on***
 
 API
 ---
