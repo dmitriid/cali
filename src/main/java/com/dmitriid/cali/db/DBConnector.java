@@ -40,9 +40,9 @@ public class DBConnector{
     protected static final String RESULTS = "results";
     protected static final String RETURN_KEYS = "return_keys";
 
-    Graph _graphDb = null;
-    ConversionManager _cm = null;
-    GremlinScriptEngine _engine = null;
+    protected Graph _graphDb = null;
+    protected ConversionManager _cm = null;
+    protected GremlinScriptEngine _engine = null;
 
     public DBConnector() {
         GremlinScriptEngineFactory f = new GremlinScriptEngineFactory();
@@ -63,6 +63,7 @@ public class DBConnector{
         if(null != _graphDb) _graphDb.shutdown();
         _graphDb = null;
     }
+
 
     public Object exec(final OtpErlangObject data) {
         Object request_data = _cm.convert(data);

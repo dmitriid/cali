@@ -20,7 +20,7 @@ import com.dmitriid.cali.CommandLine;
 import com.tinkerpop.blueprints.pgm.impls.orientdb.OrientGraph;
 import com.tinkerpop.gremlin.compiler.context.GremlinScriptContext;
 
-public class OrientDBConnector extends DBConnector{
+class OrientDBConnector extends DBConnector{
     public OrientDBConnector(String[] args) {
         super();
 

@@ -20,7 +20,7 @@ import com.tinkerpop.blueprints.pgm.Vertex;
 import com.tinkerpop.blueprints.pgm.impls.tg.TinkerGraph;
 import com.tinkerpop.gremlin.compiler.context.GremlinScriptContext;
 
-public class TinkerGraphConnector extends DBConnector{
+class TinkerGraphConnector extends DBConnector{
 
     public TinkerGraphConnector(String[] args) {
 

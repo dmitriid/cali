@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 
 public class GPathConverter extends AbstractErlangJavaConverter <GPath, OtpErlangList>{
-    ConversionManager _cm = null;
+    private ConversionManager _cm = null;
     public GPathConverter() {
         this(new ConversionManager());
     }

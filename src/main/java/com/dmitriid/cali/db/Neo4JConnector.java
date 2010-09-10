@@ -21,7 +21,7 @@ import com.tinkerpop.blueprints.pgm.Vertex;
 import com.tinkerpop.blueprints.pgm.impls.neo4j.Neo4jGraph;
 import com.tinkerpop.gremlin.compiler.context.GremlinScriptContext;
 
-public class Neo4JConnector extends DBConnector {
+class Neo4JConnector extends DBConnector {
 
     public Neo4JConnector(String[] args) {
 

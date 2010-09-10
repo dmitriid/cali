@@ -21,18 +21,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommandLine {
-    HashMap<String, String> _options = new HashMap<String, String>();
+    private HashMap<String, String> _options = new HashMap<String, String>();
 
-    Pattern optionMatch = Pattern.compile("^[-]{1,2}(\\w*)");
+    private Pattern _optionMatch = Pattern.compile("^[-]{1,2}(\\w+)");  // handle -o and --opt and -opt
 
     public CommandLine(String[] args) {
         String optionName = null;
         Matcher matcher;
 
         for(String o : args) {
-            matcher = optionMatch.matcher(o);
+            matcher = _optionMatch.matcher(o);
             if(matcher.find()) {
-                if(optionName != null) {
+                if(optionName != null) { // in case there was an option without a parameter before this one
                     _options.put(matcher.group(1), null);
                     optionName = null;
                 }
@@ -47,11 +47,16 @@ public class CommandLine {
         }
     }
 
-    public boolean hasOption(String key) {
-        return _options.containsKey(key);
+    public boolean hasOption(String... keys) {
+        for(String key : keys) {
+            if(_options.containsKey(key)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public String optionValue(String... options){
+    public String optionValue(String... options){  
         for(String option : options){
             if(_options.containsKey(option)){
                 return _options.get(option);
