@@ -17,27 +17,28 @@
 package com.dmitriid.cali.db;
 
 import com.dmitriid.cali.CommandLine;
-import com.tinkerpop.blueprints.pgm.Vertex;
-import com.tinkerpop.blueprints.pgm.impls.neo4j.Neo4jGraph;
+import com.tinkerpop.blueprints.pgm.impls.orientdb.OrientGraph;
 import com.tinkerpop.gremlin.compiler.context.GremlinScriptContext;
 
-public class Neo4JConnector extends DBConnector {
-
-    public Neo4JConnector(String[] args) {
-
+public class OrientDBConnector extends DBConnector{
+    public OrientDBConnector(String[] args) {
         super();
 
         CommandLine line = new CommandLine(args);
 
-        String db_path = line.optionValue("d", "db_path", "path");
+        String url = line.optionValue("u", "url");
+        String user = line.optionValue("user");
+        String password = line.optionValue("pass");
 
-        _graphDb = new Neo4jGraph(db_path);
 
-        Vertex root = _graphDb.getVertex(0);
+        _graphDb = new OrientGraph(url);
+        ((OrientGraph)_graphDb).open(user, password);
+        
+        //Vertex root = _graphDb.getVertex(0);
 
         _engine.getBindings(GremlinScriptContext.ENGINE_SCOPE).put("$name", "gremlin");
-        _engine.getBindings(GremlinScriptContext.ENGINE_SCOPE).put(ROOT_VARIABLE, root);
+        //_engine.getBindings(GremlinScriptContext.ENGINE_SCOPE).put(ROOT_VARIABLE, root);
         _engine.getBindings(GremlinScriptContext.ENGINE_SCOPE).put(GRAPH_VARIABLE, _graphDb);
-    }
 
+    }
 }

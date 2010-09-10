@@ -19,11 +19,12 @@ package com.dmitriid.cali;
 import com.dmitriid.cali.db.DBConnector;
 import com.dmitriid.cali.db.DBConnectorFactory;
 import com.ericsson.otp.erlang.*;
-import jargs.gnu.CmdLineParser;
 import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.helpers.Pair;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main {
@@ -36,14 +37,23 @@ public class Main {
     private static final String SCRIPT = "script";
     private static final String RESULTS = "results";
     private static final String RETURN_KEYS = "return_keys";
-    
+
+    private String _name = "cali@localhost";
+    private String _mbox_name = "mbox";
+    private String _cookie = null;
+    private String _connector = "com.dmitriid.cali.db.Neo4JConnector";
+
+    private List arguments = new ArrayList();
+
     public enum MyRelationshipTypes implements RelationshipType {
         KNOWS
     }
 
     public static void main(String[] args) {
 
-        CmdLineParser parser = new CmdLineParser();
+        
+
+        /*jargs.gnu.CmdLineParser parser = new CmdLineParser();
 
         CmdLineParser.Option n = parser.addStringOption('n', "name");
         CmdLineParser.Option m = parser.addStringOption('m', "mbox");
@@ -54,32 +64,54 @@ public class Main {
             parser.parse(args);
         } catch(CmdLineParser.OptionException e) {
             System.err.println(e.getMessage());
-            System.exit(2);
+            //System.exit(2);
         }
 
         String name_value = (String) parser.getOptionValue(n);
         String mbox_value = (String) parser.getOptionValue(m);
         String cookie_value = (String) parser.getOptionValue(c);
-        String className = (String) parser.getOptionValue(cl);
+        String className = (String) parser.getOptionValue(cl);     */
 
-        if(className == null) className = "com.dmitriid.cali.db.Neo4JConnector";
+        new Main().doMain(args);
+    }
 
-        DBConnector db = DBConnectorFactory.getConnector(className, args);
+    public void doMain(String[] args){
 
+
+        CommandLine line = new CommandLine(args);
+
+
+        String name = line.optionValue("n", "name");
+        String mbox_name = line.optionValue("m", "mbox");
+        String cookie = line.optionValue("c", "cookie");
+        String connector = line.optionValue("connector");
+
+        _name = name != null ? name : _name;
+        _mbox_name = mbox_name != null ? mbox_name : _mbox_name;
+        _cookie = cookie != null ? cookie : _cookie;
+        _connector = connector != null ? connector : _connector;
+
+        DBConnector db = null;
+        try{
+            db = DBConnectorFactory.getConnector(_connector, args);
+        }catch(Exception e){
+            System.out.println(e);
+            System.exit(2);
+        }
 
         OtpNode self = null;
         OtpMbox mbox = null;
-        
-        try{
-            self = new OtpNode(name_value != null ? name_value : "cali@localhost");
-            mbox = self.createMbox(mbox_value != null ? mbox_value : "mbox");
-        } catch(IOException e){
+
+        try {
+            self = new OtpNode(_name);
+            mbox = self.createMbox(_mbox_name);
+        } catch(IOException e) {
             System.err.println(e.getMessage());
             System.exit(2);
         }
 
-        if(cookie_value != null) {
-            self.setCookie(cookie_value);
+        if(_cookie != null) {
+            self.setCookie(_cookie);
         }
 
         OtpErlangObject o;
@@ -101,16 +133,16 @@ public class Main {
 
                     OtpErlangObject data = msg.elementAt(1);
                     if(data instanceof OtpErlangList) {
-                        OtpErlangObject out  ;
-                        try{
+                        OtpErlangObject out;
+                        try {
                             Object e = db.exec(data);
                             out = db.fromJava(e);
-                        } catch(Exception e){
+                        } catch(Exception e) {
                             System.out.println(e);
                             out = db.fromJava(new Pair("error", e.getMessage()));
                         }
                         mbox.send(from, out);
-                    }else{
+                    } else {
                         mbox.send(from, msg.elementAt(1));
                     }
 
@@ -122,6 +154,5 @@ public class Main {
         }
 
         db.shutdown();
-
     }
 }
