@@ -44,8 +44,6 @@ Your connector may require additional options, just append them to the options a
 * `--user`. username, required.
 * `--pass`. password, required
 
-***Note: OrientDB is currently in a non-working state (it can only open and shutdown a database). This is due to the fact that OrientDB handles stuff slightly differently from other databases. This is being worked on***
-
 API
 ---
 

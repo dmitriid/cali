@@ -17,6 +17,7 @@
 package com.dmitriid.cali.db;
 
 import com.dmitriid.cali.CommandLine;
+import com.dmitriid.cali.converters.ORecordIdConverter;
 import com.tinkerpop.blueprints.pgm.impls.orientdb.OrientGraph;
 import com.tinkerpop.gremlin.compiler.context.GremlinScriptContext;
 
@@ -30,11 +31,12 @@ class OrientDBConnector extends DBConnector{
         String user = line.optionValue("user");
         String password = line.optionValue("pass");
 
+        _cm.register(new ORecordIdConverter());
 
         _graphDb = new OrientGraph(url);
         ((OrientGraph)_graphDb).open(user, password);
         
-        //Vertex root = _graphDb.getVertex(0);
+        //Vertex root = _graphDb.getVertex("graph");
 
         _engine.getBindings(GremlinScriptContext.ENGINE_SCOPE).put("$name", "gremlin");
         //_engine.getBindings(GremlinScriptContext.ENGINE_SCOPE).put(ROOT_VARIABLE, root);

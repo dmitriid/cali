@@ -30,11 +30,6 @@
             <artifactId>jinterface</artifactId>
             <version>1.5.3</version>
         </dependency>
-        <dependency>
-            <groupId>gnu</groupId>
-            <artifactId>jargs</artifactId>
-            <version>1</version>
-        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,12 +47,6 @@
                 <enabled>true</enabled>
                 <updatePolicy>daily</updatePolicy>
             </snapshots>
-        </repository>
-        <repository>
-            <layout>legacy</layout>
-            <id>LocalDeps</id>
-            <name>AbcRepository</name>
-            <url>./deps/</url>
         </repository>
     </repositories>
     <build>
