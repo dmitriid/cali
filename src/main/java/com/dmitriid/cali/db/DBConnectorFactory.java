@@ -58,6 +58,9 @@ public class DBConnectorFactory {
             System.out.println(e);
         } catch(InvocationTargetException e) {
             System.out.println(e);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            System.out.println(e.getCause());
         }
         return object;
     }

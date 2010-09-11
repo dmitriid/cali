@@ -16,33 +16,19 @@
 
 package com.dmitriid.cali.db;
 
-import com.dmitriid.cali.CommandLine;
-import com.dmitriid.cali.converters.ORecordIdConverter;
-import com.tinkerpop.blueprints.pgm.impls.orientdb.OrientGraph;
+import com.dmitriid.blueredis.RedisGraph;
+import com.tinkerpop.blueprints.pgm.Vertex;
 import com.tinkerpop.gremlin.compiler.context.GremlinScriptContext;
 
-class OrientDBConnector extends DBConnector{
-    public OrientDBConnector(String[] args) {
-        super();
+public class RedisConnector extends DBConnector{
+    public RedisConnector(String[] args) {
+        _graphDb = new RedisGraph();
 
-        CommandLine line = new CommandLine(args);
-
-        String url = line.optionValue("u", "url");
-        String user = line.optionValue("user");
-        String password = line.optionValue("pass");
-
-        _cm.register(new ORecordIdConverter());
-
-        _graphDb = new OrientGraph(url);
-        ((OrientGraph)_graphDb).open(user, password);
-
-        //ODatabaseGraphTx db = ((OrientGraph) _graphDb).getUnderlying();
-        
-        //Vertex root = _graphDb.getVertex("graph");
+        Vertex root = _graphDb.getVertex(1);
+        if(null == root) root = _graphDb.addVertex(null);
 
         _engine.getBindings(GremlinScriptContext.ENGINE_SCOPE).put("$name", "gremlin");
-        //_engine.getBindings(GremlinScriptContext.ENGINE_SCOPE).put(ROOT_VARIABLE, root);
+        _engine.getBindings(GremlinScriptContext.ENGINE_SCOPE).put(ROOT_VARIABLE, root);
         _engine.getBindings(GremlinScriptContext.ENGINE_SCOPE).put(GRAPH_VARIABLE, _graphDb);
-
     }
 }

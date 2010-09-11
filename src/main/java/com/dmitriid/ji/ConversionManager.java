@@ -78,6 +78,7 @@ public class ConversionManager {
                 new StringConverter(),
                 new BinaryConverter(),
                 new AtomConverter(),
+                new ByteArrayConverter(),
 
                 new ArrayListConverter(this),
                 new TupleConverter(this),

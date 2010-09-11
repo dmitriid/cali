@@ -44,6 +44,10 @@ Your connector may require additional options, just append them to the options a
 * `--user`. username, required.
 * `--pass`. password, required
 
+**RedisCOnnector**
+
+*Note: As of now RedisConnector doesn't support any additonal options such as host, ip, password or database. Support for these will come in the nerest future. Right now RedisConnector operates on database 0 on localhost on default port.*
+
 API
 ---
 
